@@ -106,8 +106,11 @@ public class Graph<T extends Comparable<T>> {
   }
 
   public boolean isEquivalence() {
-    // TODO: Task 1.
-    throw new UnsupportedOperationException();
+    // if the graph is reflexive, symmetric and transitive, then it is an equivalence relation
+    if (isReflexive() && isSymmetric() && isTransitive()) {
+      return true;
+    }
+    return false;
   }
 
   public Set<T> getEquivalenceClass(T vertex) {
