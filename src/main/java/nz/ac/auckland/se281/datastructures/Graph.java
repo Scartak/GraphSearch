@@ -40,9 +40,20 @@ public class Graph<T extends Comparable<T>> {
   }
 
   public boolean isSymmetric() {
-    // G is Symmetric if for all (v1,v2)∈E it must be the case that (v2,v1)∈E
-    for (Edge<T> edge : edges) {
-      if (!edges.contains(new Edge<>(edge.getDestination(), edge.getSource()))) {
+    T source;
+    T destination;
+    // find out if there is an edge from A to B and from B to A
+
+    for (Edge<T> e : edges) {
+      int check = 0;
+      source = e.getSource();
+      destination = e.getDestination();
+      for (Edge<T> e2 : edges) {
+        if (e2.getSource().equals(destination) && e2.getDestination().equals(source)) {
+          check++;
+        }
+      }
+      if (check == 0) {
         return false;
       }
     }
