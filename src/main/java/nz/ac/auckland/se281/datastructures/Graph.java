@@ -22,18 +22,18 @@ public class Graph<T extends Comparable<T>> {
   }
 
   public Set<T> getRoots() {
-    Set<T> roots = new TreeSet<>(verticies); // Initialize roots with all vertices
-    if (isEquivalence()) {
-      for (T vertex : verticies) {
-        if (getEquivalenceClass(vertex) != null) {
-          roots.add(getEquivalenceClass(vertex).iterator().next());
 
-        } else {
-          roots.add(vertex);
-        }
+    Set<T> roots;
+
+    if (isEquivalence()) {
+      roots = new TreeSet<>();
+      for (T vertex : verticies) {
+        T min = getEquivalenceClass(vertex).stream().findFirst().get();
+        roots.add(min);
       }
     } else {
 
+      roots = new TreeSet<>(verticies); // Initialize roots with all vertices
       for (Edge<T> edge : edges) {
         roots.remove(edge.getDestination()); // Remove destinations from roots
       }
