@@ -1,5 +1,6 @@
 package nz.ac.auckland.se281.datastructures;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -23,18 +24,14 @@ public class Graph<T extends Comparable<T>> {
 
   public Set<T> getRoots() {
 
-    Set<T> roots = new TreeSet<T>();
-
-    for (T vertice : verticies) {
-      boolean isRoot = true;
-      for (Edge<T> edge : edges) {
-        if (edge.getDestination().equals(vertice)) {
-          isRoot = false;
-        }
-      }
-      if (isRoot) {
-        roots.add(vertice);
-      }
+    Set<T> roots = new HashSet<T>();
+    Set<T> store = new HashSet<T>();
+    for (T v : verticies) {
+      // get the minimum value of the set of verticies from getequivalenceclass
+      // if the minimum value is not in the set of edges, then it is a root
+      store = getEquivalenceClass(v);
+      T min = store.iterator().next();
+      roots.add(min);
     }
 
     return roots;
