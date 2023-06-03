@@ -30,8 +30,11 @@ public class Graph<T extends Comparable<T>> {
       // get the minimum value of the set of verticies from getequivalenceclass
       // if the minimum value is not in the set of edges, then it is a root
       store = getEquivalenceClass(v);
-      T min = store.iterator().next();
-      roots.add(min);
+      roots.add(store.iterator().next());
+      // if (!store.isEmpty()) {
+      //   T min = store.iterator().next();
+      //   roots.add(min);
+      // }
     }
 
     return roots;

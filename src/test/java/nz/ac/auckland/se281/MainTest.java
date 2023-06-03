@@ -148,7 +148,7 @@ public class MainTest {
 
     @Test
     public void T1_B_equivalence_class_1() throws Exception {
-      runCommands(OPEN_FILE, "b.txt", COMPUTE_EQUIVALENCE, 1);
+      runCommands(OPEN_FILE, "b.txt", COMPUTE_EQUIVALENCE, 4);
       assertContains("Successfully opened graph from file b.txt");
       assertContains("[]");
     }
