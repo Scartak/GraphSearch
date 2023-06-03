@@ -40,8 +40,13 @@ public class Graph<T extends Comparable<T>> {
   }
 
   public boolean isSymmetric() {
-    // TODO: Task 1.
-    throw new UnsupportedOperationException();
+    // G is Symmetric if for all (v1,v2)∈E it must be the case that (v2,v1)∈E
+    for (Edge<T> edge : edges) {
+      if (!edges.contains(new Edge<>(edge.getDestination(), edge.getSource()))) {
+        return false;
+      }
+    }
+    return true;
   }
 
   public boolean isTransitive() {
