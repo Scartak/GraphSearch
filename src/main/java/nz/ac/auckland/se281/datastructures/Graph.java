@@ -49,7 +49,7 @@ public class Graph<T extends Comparable<T>> {
       source = e.getSource();
       destination = e.getDestination();
       for (Edge<T> e2 : edges) {
-        if (e2.getSource().equals(destination) && e2.getDestination().equals(source)) {
+        if (e2.getSource() == destination && e2.getDestination() == source) {
           check++;
         }
       }
@@ -61,8 +61,29 @@ public class Graph<T extends Comparable<T>> {
   }
 
   public boolean isTransitive() {
-    // TODO: Task 1.
-    throw new UnsupportedOperationException();
+    // for all vertices, u, v and w in the set of vertices, if (u,v) is an edge and (v,w) is also an
+    // edge, then there must also be an edge (u,w).
+    for (Edge<T> e : edges) {
+
+      T source1 = e.getSource();
+      T destination1 = e.getDestination();
+      for (Edge<T> e2 : edges) {
+        T source2 = e2.getSource();
+        T destination2 = e2.getDestination();
+        if (destination1 == source2) {
+          int count = 0;
+          for (Edge<T> e3 : edges) {
+            if (e3.getSource() == source1 && e3.getDestination() == destination2) {
+              count++;
+            }
+          }
+          if (count == 0) {
+            return false;
+          }
+        }
+      }
+    }
+    return true;
   }
 
   public boolean isAntiSymmetric() {
