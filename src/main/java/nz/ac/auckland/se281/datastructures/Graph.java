@@ -26,13 +26,17 @@ public class Graph<T extends Comparable<T>> {
   }
 
   public boolean isReflexive() {
-    // if all the source and destination are the same then return true
+
+    int verticeNumber = verticies.size();
+    int reflexiveEdges = 0;
+
     for (Edge<T> edge : edges) {
-      if (!edge.getSource().equals(edge.getDestination())) {
-        return false;
+      if (edge.getSource().equals(edge.getDestination())) {
+        reflexiveEdges++;
       }
     }
-    return true;
+
+    return verticeNumber == reflexiveEdges;
   }
 
   public boolean isSymmetric() {
