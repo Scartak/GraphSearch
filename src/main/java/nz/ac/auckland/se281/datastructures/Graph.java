@@ -1,5 +1,6 @@
 package nz.ac.auckland.se281.datastructures;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -21,7 +22,46 @@ public class Graph<T extends Comparable<T>> {
     this.edges = edges;
   }
 
-  public Set<T> getRoots() {}
+  public Set<T> getRoots() {
+
+    Set<T> roots = new HashSet<T>();
+
+    // if (!isEquivalence()) {
+    //   return roots;
+    // }
+    for (T v : verticies) {
+      boolean isRoot = true;
+      for (Edge<T> e : edges) {
+        if (e.getDestination().equals(v) && !e.getSource().equals(v)) {
+          isRoot = false;
+        }
+      }
+      if (isRoot) {
+        roots.add(v);
+      }
+    }
+
+    Set<T> copy = new HashSet<T>(verticies);
+
+    for (T v : verticies) {
+      for (Edge<T> e : edges) {
+        if (e.getDestination().equals(v) && e.getSource().equals(v)) {
+          copy.remove(v);
+        }
+      }
+    }
+
+    if (roots.isEmpty()) {
+      T minimumValue = null;
+      for (T v : copy) {
+        if (minimumValue == null || v.compareTo(minimumValue) < 0) {
+          minimumValue = v;
+        }
+      }
+      roots.add(minimumValue);
+    }
+    return roots;
+  }
 
   public boolean isReflexive() {
 
