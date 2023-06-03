@@ -22,7 +22,11 @@ public class Graph<T extends Comparable<T>> {
 
   public Set<T> getRoots() {
 
-    throw new UnsupportedOperationException();
+    Set<T> roots = verticies;
+    for (Edge<T> edge : edges) {
+      roots.remove(edge.getDestination());
+    }
+    return roots;
   }
 
   public boolean isReflexive() {
