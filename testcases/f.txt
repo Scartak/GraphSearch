@@ -1,4 +1,4 @@
-f.txt
+
 
 // 0
 digraph testgraph {
