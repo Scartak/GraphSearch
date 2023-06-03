@@ -2,6 +2,7 @@ package nz.ac.auckland.se281.datastructures;
 
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * A graph that is composed of a set of verticies and edges.
@@ -22,11 +23,7 @@ public class Graph<T extends Comparable<T>> {
 
   public Set<T> getRoots() {
 
-    Set<T> roots = verticies;
-    for (Edge<T> edge : edges) {
-      roots.remove(edge.getDestination());
-    }
-    return roots;
+    throw new UnsupportedOperationException();
   }
 
   public boolean isReflexive() {
@@ -118,8 +115,32 @@ public class Graph<T extends Comparable<T>> {
   }
 
   public Set<T> getEquivalenceClass(T vertex) {
-    // TODO: Task 1.
-    throw new UnsupportedOperationException();
+    // create a new tree set
+    Set<T> equivalenceClass = new TreeSet<>();
+
+    if (!isEquivalence()) {
+      return equivalenceClass;
+    }
+
+    if (isEquivalence()) {
+      // if the graph is an equivalence relation, then add the vertex to the equivalence class
+      equivalenceClass.add(vertex);
+
+      // for all edges in the graph
+      for (Edge<T> e : edges) {
+        // if the source of the edge is equal to the vertex, then add the destination to the
+        // equivalence class
+
+        if (e.getSource().equals(vertex)) {
+          equivalenceClass.add(e.getDestination());
+        }
+        if (e.getDestination().equals(vertex)) {
+          equivalenceClass.add(e.getSource());
+        }
+      }
+    }
+
+    return equivalenceClass;
   }
 
   public List<T> iterativeBreadthFirstSearch() {
