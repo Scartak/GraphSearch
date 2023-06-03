@@ -1,6 +1,5 @@
 package nz.ac.auckland.se281.datastructures;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -23,42 +22,32 @@ public class Graph<T extends Comparable<T>> {
   }
 
   public Set<T> getRoots() {
+    Set<T> roots = new TreeSet<>(verticies); // Initialize roots with all vertices
+    if (isEquivalence()) {
+      for (T vertex : verticies) {
+        if (getEquivalenceClass(vertex) != null) {
+          roots.add(getEquivalenceClass(vertex).iterator().next());
 
-    Set<T> roots = new HashSet<T>();
-
-    // if (!isEquivalence()) {
-    //   return roots;
-    // }
-    for (T v : verticies) {
-      boolean isRoot = true;
-      for (Edge<T> e : edges) {
-        if (e.getDestination().equals(v) && !e.getSource().equals(v)) {
-          isRoot = false;
+        } else {
+          roots.add(vertex);
         }
       }
-      if (isRoot) {
-        roots.add(v);
+    } else {
+
+      for (Edge<T> edge : edges) {
+        roots.remove(edge.getDestination()); // Remove destinations from roots
       }
-    }
 
-    Set<T> copy = new HashSet<T>(verticies);
-
-    for (T v : verticies) {
-      for (Edge<T> e : edges) {
-        if (e.getDestination().equals(v) && e.getSource().equals(v)) {
-          copy.remove(v);
+      if (roots.isEmpty()) {
+        // If there are no vertices without incoming edges, find the minimum vertex
+        T minVertex = null;
+        for (T vertex : verticies) {
+          if (minVertex == null || vertex.compareTo(minVertex) < 0) {
+            minVertex = vertex;
+          }
         }
+        roots.add(minVertex);
       }
-    }
-
-    if (roots.isEmpty()) {
-      T minimumValue = null;
-      for (T v : copy) {
-        if (minimumValue == null || v.compareTo(minimumValue) < 0) {
-          minimumValue = v;
-        }
-      }
-      roots.add(minimumValue);
     }
     return roots;
   }
