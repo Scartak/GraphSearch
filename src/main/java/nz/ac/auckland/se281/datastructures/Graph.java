@@ -87,8 +87,22 @@ public class Graph<T extends Comparable<T>> {
   }
 
   public boolean isAntiSymmetric() {
-    // TODO: Task 1.
-    throw new UnsupportedOperationException();
+    // for all vertices, u, v in the set of vertices, if (u,v) is an edge, and (v,u) is also an
+    // edge, then vertex u is equal to the vertex v.
+    for (Edge<T> e : edges) {
+      T source = e.getSource();
+      T destination = e.getDestination();
+      for (Edge<T> e2 : edges) {
+        T source2 = e2.getSource();
+        T destination2 = e2.getDestination();
+        if (source == destination2 && destination == source2) {
+          if (source != destination) {
+            return false;
+          }
+        }
+      }
+    }
+    return true;
   }
 
   public boolean isEquivalence() {
