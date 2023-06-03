@@ -1,37 +1,38 @@
 package nz.ac.auckland.se281.datastructures;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Queue<T> {
-  private LinkedList<T> list;
 
-  public Queue() {
-    list = new LinkedList<>();
-  }
+  List<T> queueList = new ArrayList<T>();
 
-  public void enqueue(T item) {
-    list.append(item);
+  public Queue() {}
+
+  public void enqueue(T data) {
+    queueList.add(data);
   }
 
   public T dequeue() {
-    if (isEmpty()) {
-      throw new IllegalStateException("Queue is empty");
-    }
-    T item = list.fetch(0);
-    list.remove(0);
-    return item;
+    T ans = queueList.get(0);
+    queueList.remove(0);
+    return ans;
   }
 
   public T peek() {
-    if (isEmpty()) {
-      throw new IllegalStateException("Queue is empty");
-    }
-    return list.fetch(0);
+    return queueList.get(0);
   }
 
   public boolean isEmpty() {
-    return list.size() == 0;
+    if (queueList.size() == 0) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
-  public int size() {
-    return list.size();
+  @Override
+  public String toString() {
+    return "" + queueList + "";
   }
 }

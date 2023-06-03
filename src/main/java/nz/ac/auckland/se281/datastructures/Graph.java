@@ -1,5 +1,7 @@
 package nz.ac.auckland.se281.datastructures;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -170,12 +172,35 @@ public class Graph<T extends Comparable<T>> {
   }
 
   public List<T> iterativeBreadthFirstSearch() {
-    // TODO: Task 2.
-    throw new UnsupportedOperationException();
+    List<T> traversal = new ArrayList<>();
+    if (verticies.isEmpty()) {
+      return traversal;
+    }
+    Queue<T> queue = new Queue<>();
+    Set<T> visited = new HashSet<>();
+
+    // Start traversal from the first root vertex
+    T root = getRoots().iterator().next();
+    queue.enqueue(root);
+    visited.add(root);
+
+    while (!queue.isEmpty()) {
+      T currentVertex = queue.dequeue();
+      traversal.add(currentVertex);
+
+      for (Edge<T> edge : edges) {
+        if (edge.getSource().equals(currentVertex) && !visited.contains(edge.getDestination())) {
+          queue.enqueue(edge.getDestination());
+          visited.add(edge.getDestination());
+        }
+      }
+    }
+
+    return traversal;
   }
 
   public List<T> iterativeDepthFirstSearch() {
-    // TODO: Task 2.
+    // TODO: Task 3.
     throw new UnsupportedOperationException();
   }
 
