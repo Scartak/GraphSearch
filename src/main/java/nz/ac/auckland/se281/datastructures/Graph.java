@@ -213,13 +213,23 @@ public class Graph<T extends Comparable<T>> {
             visited.add(vertex); // Mark the vertex as visited
 
             // Explore the neighbors of the current vertex
-            // Push the neighbors to the stack in reverse order
+            List<T> neighbors = new ArrayList<>();
             for (Edge<T> edge : edges) {
               if (edge.getSource().equals(vertex)) {
-                T destination = edge.getDestination();
-                if (!visited.contains(destination)) {
-                  stack.push(destination); // Push the neighbor to the stack
-                }
+                neighbors.add(edge.getDestination());
+              }
+            }
+
+            // Reverse the order of neighbors manually
+            List<T> reversedNeighbors = new ArrayList<>();
+            for (int i = neighbors.size() - 1; i >= 0; i--) {
+              reversedNeighbors.add(neighbors.get(i));
+            }
+
+            // Push the reversed neighbors to the stack
+            for (T neighbor : reversedNeighbors) {
+              if (!visited.contains(neighbor)) {
+                stack.push(neighbor); // Push the neighbor to the stack
               }
             }
           }
