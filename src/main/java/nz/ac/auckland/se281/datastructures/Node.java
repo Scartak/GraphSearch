@@ -11,7 +11,6 @@ public class Node<T> {
   public Node(T v) {
     val = v;
     this.next = null;
-    ;
   }
 
   public Node(T v, Node<T> next) {

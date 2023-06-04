@@ -8,8 +8,8 @@ package nz.ac.auckland.se281.datastructures;
  * @param <T> The type of each vertex.
  */
 public class Edge<T> {
-  private final T source;
-  private final T destination;
+  T source;
+  T destination;
 
   public Edge(T source, T destination) {
     this.source = source;
@@ -22,5 +22,12 @@ public class Edge<T> {
 
   public T getDestination() {
     return destination;
+  }
+
+  @Override
+  public int hashCode() {
+    int result = source.hashCode();
+    result = 31 * result + destination.hashCode();
+    return result;
   }
 }

@@ -43,7 +43,6 @@ public class Queue<T> {
   }
 
   public T dequeue() {
-
     T data = front.data;
     front = front.next;
     size--;
