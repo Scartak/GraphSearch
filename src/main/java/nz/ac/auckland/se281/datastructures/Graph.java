@@ -172,36 +172,69 @@ public class Graph<T extends Comparable<T>> {
   }
 
   public List<T> iterativeBreadthFirstSearch() {
-    List<T> traversal = new ArrayList<>();
-    if (verticies.isEmpty()) {
-      return traversal;
-    }
-    Queue<T> queue = new Queue<>();
-    Set<T> visited = new HashSet<>();
+    List<T> result = new ArrayList<>(); // List to store the visited vertices in order
+    Set<T> visited = new HashSet<>(); // Set to keep track of visited vertices
+    Queue<T> queue = new Queue<>(); // Queue for breadth-first search
 
-    // Start traversal from the first root vertex
-    T root = getRoots().iterator().next();
-    queue.enqueue(root);
-    visited.add(root);
+    // Start with the roots of the graph
+    Set<T> roots = getRoots();
+    for (T root : roots) {
+      if (!visited.contains(root)) {
+        queue.enqueue(root); // Enqueue the root vertex
+        visited.add(root); // Mark the root vertex as visited
+      }
+    }
 
     while (!queue.isEmpty()) {
-      T currentVertex = queue.dequeue();
-      traversal.add(currentVertex);
+      T vertex = queue.dequeue(); // Dequeue a vertex from the queue
+      result.add(vertex); // Add the vertex to the result list
 
+      // Explore the neighbors of the current vertex
       for (Edge<T> edge : edges) {
-        if (edge.getSource().equals(currentVertex) && !visited.contains(edge.getDestination())) {
-          queue.enqueue(edge.getDestination());
-          visited.add(edge.getDestination());
+        if (edge.getSource().equals(vertex)) {
+          T destination = edge.getDestination();
+          if (!visited.contains(destination)) {
+            queue.enqueue(destination); // Enqueue the neighbor if not visited
+            visited.add(destination); // Mark the neighbor as visited
+          }
         }
       }
     }
 
-    return traversal;
+    return result; // Return the list of visited vertices in order
   }
 
   public List<T> iterativeDepthFirstSearch() {
-    // TODO: Task 3.
-    throw new UnsupportedOperationException();
+    List<T> result = new ArrayList<>(); // List to store the visited vertices in order
+    Set<T> visited = new HashSet<>(); // Set to keep track of visited vertices
+    Stack<T> stack = new Stack<>(); // Stack for depth-first search
+
+    // Start with the roots of the graph
+    Set<T> roots = getRoots();
+    for (T root : roots) {
+      if (!visited.contains(root)) {
+        stack.push(root); // Push the root vertex onto the stack
+        visited.add(root); // Mark the root vertex as visited
+      }
+    }
+
+    while (!stack.isEmpty()) {
+      T vertex = stack.pop(); // Pop a vertex from the stack
+      result.add(vertex); // Add the vertex to the result list
+
+      // Explore the neighbors of the current vertex
+      for (Edge<T> edge : edges) {
+        if (edge.getSource().equals(vertex)) {
+          T destination = edge.getDestination();
+          if (!visited.contains(destination)) {
+            stack.push(destination); // Push the neighbor onto the stack
+            visited.add(destination); // Mark the neighbor as visited
+          }
+        }
+      }
+    }
+
+    return result; // Return the list of visited vertices in order
   }
 
   public List<T> recursiveBreadthFirstSearch() {
