@@ -6,7 +6,7 @@ public class Queue<T> {
   private Node<T> rear; // rear of the queue
   private int size; // size of the queue
 
-  private static class Node<T> {
+  public class Node<T> {
     private T data;
     private Node<T> next;
 
