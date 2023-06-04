@@ -204,21 +204,24 @@ public class Graph<T extends Comparable<T>> {
     for (T root : roots) {
       if (!visited.contains(root)) {
         stack.push(root); // Push the root vertex to the stack
-        visited.add(root); // Mark the root vertex as visited
-      }
-    }
 
-    while (!stack.isEmpty()) {
-      T vertex = stack.pop(); // Pop a vertex from the stack
-      result.add(vertex); // Add the vertex to the result list
+        while (!stack.isEmpty()) {
+          T vertex = stack.pop(); // Pop a vertex from the stack
 
-      // Explore the neighbors of the current vertex
-      for (Edge<T> edge : edges) {
-        if (edge.getSource().equals(vertex)) {
-          T destination = edge.getDestination();
-          if (!visited.contains(destination)) {
-            stack.push(destination); // Push the neighbor to the stack if not visited
-            visited.add(destination); // Mark the neighbor as visited
+          if (!visited.contains(vertex)) {
+            result.add(vertex); // Add the vertex to the result list
+            visited.add(vertex); // Mark the vertex as visited
+
+            // Explore the neighbors of the current vertex
+            // Push the neighbors to the stack in reverse order
+            for (Edge<T> edge : edges) {
+              if (edge.getSource().equals(vertex)) {
+                T destination = edge.getDestination();
+                if (!visited.contains(destination)) {
+                  stack.push(destination); // Push the neighbor to the stack
+                }
+              }
+            }
           }
         }
       }
