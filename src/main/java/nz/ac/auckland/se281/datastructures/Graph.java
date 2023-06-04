@@ -40,17 +40,6 @@ public class Graph<T extends Comparable<T>> {
       for (Edge<T> edge : edges) {
         roots.remove(edge.getDestination()); // Remove destinations from roots
       }
-
-      // if (roots.isEmpty()) {
-      //   // If there are no vertices without incoming edges, find the minimum vertex
-      //   T minVertex = null;
-      //   for (T vertex : verticies) {
-      //     if (minVertex == null || vertex.compareTo(minVertex) < 0) {
-      //       minVertex = vertex;
-      //     }
-      //   }
-      //   roots.add(minVertex);
-      // }
     }
     return roots;
   }
@@ -214,7 +203,7 @@ public class Graph<T extends Comparable<T>> {
     Set<T> roots = getRoots();
     for (T root : roots) {
       if (!visited.contains(root)) {
-        stack.push(root); // Push the root vertex onto the stack
+        stack.push(root); // Push the root vertex to the stack
         visited.add(root); // Mark the root vertex as visited
       }
     }
@@ -228,7 +217,7 @@ public class Graph<T extends Comparable<T>> {
         if (edge.getSource().equals(vertex)) {
           T destination = edge.getDestination();
           if (!visited.contains(destination)) {
-            stack.push(destination); // Push the neighbor onto the stack
+            stack.push(destination); // Push the neighbor to the stack if not visited
             visited.add(destination); // Mark the neighbor as visited
           }
         }
