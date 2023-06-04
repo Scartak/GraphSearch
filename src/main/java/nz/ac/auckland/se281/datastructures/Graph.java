@@ -34,22 +34,31 @@ public class Graph<T extends Comparable<T>> {
         roots.add(min);
       }
     } else {
-
-      roots = new TreeSet<>(verticies); // Initialize roots with all vertices
-      for (Edge<T> edge : edges) {
-        roots.remove(edge.getDestination()); // Remove destinations from roots
+      Set<T> temp = new TreeSet<>();
+      roots = new TreeSet<>();
+      for (T vertex : verticies) {
+        temp = getEquivalenceClass(vertex);
+        // convert temp to an array
+        T[] tempArray = (T[]) temp.toArray();
+        // add the first element of the array to roots
+        roots.add(tempArray[0]);
       }
 
-      if (roots.isEmpty()) {
-        // If there are no vertices without incoming edges, find the minimum vertex
-        T minVertex = null;
-        for (T vertex : verticies) {
-          if (minVertex == null || vertex.compareTo(minVertex) < 0) {
-            minVertex = vertex;
-          }
-        }
-        roots.add(minVertex);
-      }
+      // roots = new TreeSet<>(verticies); // Initialize roots with all vertices
+      // for (Edge<T> edge : edges) {
+      //   roots.remove(edge.getDestination()); // Remove destinations from roots
+      // }
+
+      // if (roots.isEmpty()) {
+      //   // If there are no vertices without incoming edges, find the minimum vertex
+      //   T minVertex = null;
+      //   for (T vertex : verticies) {
+      //     if (minVertex == null || vertex.compareTo(minVertex) < 0) {
+      //       minVertex = vertex;
+      //     }
+      //   }
+      //   roots.add(minVertex);
+      // }
     }
     return roots;
   }
