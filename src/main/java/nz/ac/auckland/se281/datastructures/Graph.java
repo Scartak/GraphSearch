@@ -280,7 +280,30 @@ public class Graph<T extends Comparable<T>> {
   }
 
   public List<T> recursiveDepthFirstSearch() {
-    // TODO: Task 3.
-    throw new UnsupportedOperationException();
+
+    List<T> result = new ArrayList<>(); // List to store the visited vertices in order
+    Set<T> visited = new HashSet<>(); // Set to keep track of visited vertices
+
+    // Start with the roots of the graph
+    Set<T> roots = getRoots();
+    for (T root : roots) {
+      if (!visited.contains(root)) {
+        recursiveDFS(root, visited, result); // Perform recursive depth-first search
+      }
+    }
+
+    return result; // Return the list of visited vertices in order
+  }
+
+  private void recursiveDFS(T vertex, Set<T> visited, List<T> result) {
+    visited.add(vertex); // Mark the vertex as visited
+    result.add(vertex); // Add the vertex to the result list
+
+    // Explore the neighbors of the current vertex
+    for (Edge<T> edge : edges) {
+      if (edge.getSource().equals(vertex) && !visited.contains(edge.getDestination())) {
+        recursiveDFS(edge.getDestination(), visited, result); // Recursively visit the neighbor
+      }
+    }
   }
 }
