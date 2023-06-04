@@ -241,8 +241,42 @@ public class Graph<T extends Comparable<T>> {
   }
 
   public List<T> recursiveBreadthFirstSearch() {
-    // TODO: Task 3.
-    throw new UnsupportedOperationException();
+    List<T> result = new ArrayList<>(); // List to store the visited vertices in order
+    Set<T> visited = new HashSet<>(); // Set to keep track of visited vertices
+    Queue<T> queue = new Queue<>(); // Queue for breadth-first search
+
+    // Start with the roots of the graph
+    Set<T> roots = getRoots();
+    for (T root : roots) {
+      if (!visited.contains(root)) {
+        recursiveBFS(root, queue, visited, result); // Perform recursive breadth-first search
+      }
+    }
+
+    return result; // Return the list of visited vertices in order
+  }
+
+  private void recursiveBFS(T vertex, Queue<T> queue, Set<T> visited, List<T> result) {
+    if (visited.contains(vertex)) {
+      return; // If the vertex is already visited, return
+    }
+
+    queue.enqueue(vertex); // Enqueue the vertex
+    visited.add(vertex); // Mark the vertex as visited
+
+    while (!queue.isEmpty()) {
+      T current = queue.dequeue(); // Dequeue a vertex from the queue
+      result.add(current); // Add the vertex to the result list
+
+      // Explore the neighbors of the current vertex
+      for (Edge<T> edge : edges) {
+        if (edge.getSource().equals(current) && !visited.contains(edge.getDestination())) {
+          T neighbor = edge.getDestination();
+          queue.enqueue(neighbor); // Enqueue the neighbor if not visited
+          visited.add(neighbor); // Mark the neighbor as visited
+        }
+      }
+    }
   }
 
   public List<T> recursiveDepthFirstSearch() {
