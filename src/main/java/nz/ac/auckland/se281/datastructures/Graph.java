@@ -52,7 +52,7 @@ public class Graph<T extends Comparable<T>> {
        
        Collections.sort(rootsList);
        for(int hold: rootsList) {
-        T inRoot = (T)(String.valueOf(hold));
+        T inRoot = (T)(Object)(hold);
         roots.add(inRoot);
       }
   
@@ -198,11 +198,13 @@ public class Graph<T extends Comparable<T>> {
 
       // Explore the neighbors of the current vertex
       for (Edge<T> edge : edges) {
-        if (edge.getSource().equals(vertex)) {
-          T destination = edge.getDestination();
+        Integer temp = Integer.parseInt(edge.getSource().toString());
+        if (temp.equals(vertex)) {
+          Integer destination = Integer.parseInt(edge.getDestination().toString());
           if (!visited.contains(destination)) {
-            queue.enqueue(destination); // Enqueue the neighbor if not visited
-            visited.add(destination); // Mark the neighbor as visited
+            T inDestination = (T) (Object) (destination);
+            queue.enqueue(inDestination); // Enqueue the neighbor if not visited
+            visited.add(inDestination); // Mark the neighbor as visited
           }
         }
       }
