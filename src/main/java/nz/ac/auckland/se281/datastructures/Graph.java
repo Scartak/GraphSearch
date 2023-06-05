@@ -52,7 +52,7 @@ public class Graph<T extends Comparable<T>> {
        
        Collections.sort(rootsList);
        for(int hold: rootsList) {
-        T inRoot = (T)(Object)hold;
+        T inRoot = (T)(String.valueOf(hold));
         roots.add(inRoot);
       }
   
