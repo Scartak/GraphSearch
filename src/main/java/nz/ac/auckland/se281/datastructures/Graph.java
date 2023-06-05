@@ -1,6 +1,8 @@
 package nz.ac.auckland.se281.datastructures;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -24,14 +26,50 @@ public class Graph<T extends Comparable<T>> {
   }
 
   public Set<T> getRoots() {
-    Set<T> roots = new TreeSet<>(verticies); // Initialize roots with all vertices
 
-    for (Edge<T> edge : edges) {
-        roots.remove(edge.getDestination()); // Remove destinations from roots
+    Set<T> roots = new TreeSet<>();
+    List<Integer> rootsList = new ArrayList<>();
+    Set<T> tempRoots = new TreeSet<>();
+
+    if (isEquivalence()) {
+      roots = new TreeSet<>();
+      for (T vertex : verticies) {
+        T min = getEquivalenceClass(vertex).stream().findFirst().get();
+        roots.add(min);
+      }
+    } else {
+      // roots = new TreeSet<>();
+
+      tempRoots = new TreeSet<>(verticies); // Initialize roots with all vertices
+      for (Edge<T> edge : edges) {
+        tempRoots.remove(edge.getDestination()); // Remove destinations from roots
+      }
     }
 
+    for(T root : tempRoots) {
+     int temp =  Integer.parseInt(root.toString());
+     rootsList.add(temp);
+    }
+
+    Collections.sort(rootsList);
+
+    //get minimum number from rootsList
+    // int min = rootsList.get(0);
+    // for(int i = 0; i < rootsList.size(); i++){
+    //   if(rootsList.get(i) < min){
+    //     sorting[i] = rootsList.get(i);
+    //   }    
+    // }
+    
+
+    for(int hold: rootsList) {
+      T inRoot = (T) Integer.toString(hold);
+      roots.add(inRoot);
+    }
+
+
     return roots;
-}
+  }
 
   public boolean isReflexive() {
 
