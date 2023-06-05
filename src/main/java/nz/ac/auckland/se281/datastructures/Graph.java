@@ -23,50 +23,85 @@ public class Graph<T extends Comparable<T>> {
     this.edges = edges;
   }
 
+  /**
+   * Returns the set of roots of this graph.
+   *
+   * <p>A root is a vertex that has no incoming edges.
+   *
+   * <p>If the graph is an equivalence relation, then the roots are the minimum elements of each
+   * equivalence class.
+   *
+   * @return The set of roots of this graph.
+   */
   public Set<T> getRoots() {
 
     Set<T> roots;
 
+    // If the graph is an equivalence relation, then the roots are the minimum elements of each
     if (isEquivalence()) {
       roots = new TreeSet<>();
       for (T vertex : verticies) {
         T min = getEquivalenceClass(vertex).stream().findFirst().get();
         roots.add(min);
       }
-    } else {
+    }
+
+    // If the graph is not an equivalence relation, then the roots are the vertices with no incoming
+    // edges
+    else {
       roots = new TreeSet<>();
 
-      roots = new TreeSet<>(verticies); // Initialize roots with all vertices
+      roots = new TreeSet<>(verticies);
       for (Edge<T> edge : edges) {
-        roots.remove(edge.getDestination()); // Remove destinations from roots
+        roots.remove(edge.getDestination());
       }
     }
     return roots;
   }
 
+  /**
+   * Returns true if the graph is reflexive.
+   *
+   * <p>A graph is reflexive if every vertex has a self-loop.
+   *
+   * @return True if the graph is reflexive.
+   */
   public boolean isReflexive() {
 
     int verticeNumber = verticies.size();
     int reflexiveEdges = 0;
 
+    // increments reflexiveEdges if the source and destination of an edge are the same
     for (Edge<T> edge : edges) {
       if (edge.getSource().equals(edge.getDestination())) {
         reflexiveEdges++;
       }
     }
 
+    // returns true if the number of reflexive edges is equal to the number of vertices
     return verticeNumber == reflexiveEdges;
   }
 
+  /**
+   * Returns true if the graph is symmetric.
+   *
+   * <p>A graph is symmetric if for every edge (A,B), there is also an edge (B,A).
+   *
+   * @return True if the graph is symmetric.
+   */
   public boolean isSymmetric() {
     T source;
     T destination;
-    // find out if there is an edge from A to B and from B to A
 
+    // check for every edge if the source and destination are the same as the destination and source
+    // of another edge
     for (Edge<T> e : edges) {
       int check = 0;
       source = e.getSource();
       destination = e.getDestination();
+
+      // if the source and destination are the same as the destination and source of another edge,
+      // increment check
       for (Edge<T> e2 : edges) {
         if (e2.getSource() == destination && e2.getDestination() == source) {
           check++;
@@ -79,18 +114,26 @@ public class Graph<T extends Comparable<T>> {
     return true;
   }
 
+  /**
+   * A graph is transitive if for every pair of edges (A,B) and (B,C), there is also an edge (A,C).
+   *
+   * @return True if the graph is transitive.
+   */
   public boolean isTransitive() {
-    // for all vertices, u, v and w in the set of vertices, if (u,v) is an edge and (v,w) is also an
-    // edge, then there must also be an edge (u,w).
-    for (Edge<T> e : edges) {
 
+    // gets the source and destination of each edge
+    for (Edge<T> e : edges) {
       T source1 = e.getSource();
       T destination1 = e.getDestination();
+
+      // checks if the destination of an edge is the same as the source of another edge
       for (Edge<T> e2 : edges) {
         T source2 = e2.getSource();
         T destination2 = e2.getDestination();
         if (destination1 == source2) {
           int count = 0;
+
+          // checks if the source of an edge is the same as the destination of another edge
           for (Edge<T> e3 : edges) {
             if (e3.getSource() == source1 && e3.getDestination() == destination2) {
               count++;
@@ -105,15 +148,25 @@ public class Graph<T extends Comparable<T>> {
     return true;
   }
 
+  /**
+   * A graph is anti-symmetric if for every pair of edges (A,B) and (B,A), A=B.
+   *
+   * @return True if the graph is anti-symmetric.
+   */
   public boolean isAntiSymmetric() {
-    // for all vertices, u, v in the set of vertices, if (u,v) is an edge, and (v,u) is also an
-    // edge, then vertex u is equal to the vertex v.
+
+    // creates a source and desitination edge
     for (Edge<T> e : edges) {
       T source = e.getSource();
       T destination = e.getDestination();
+
+      // checks if the source and destination of an edge are the same as the destination and source
       for (Edge<T> e2 : edges) {
         T source2 = e2.getSource();
         T destination2 = e2.getDestination();
+
+        // if the source and destination of an edge are the same as the destination and source of
+        // another edge, then check if the source and destination are the same
         if (source == destination2 && destination == source2) {
           if (source != destination) {
             return false;
@@ -124,6 +177,11 @@ public class Graph<T extends Comparable<T>> {
     return true;
   }
 
+  /**
+   * A graph is an equivalence relation if it is reflexive, symmetric and transitive.
+   *
+   * @return True if the graph is an equivalence relation.
+   */
   public boolean isEquivalence() {
     // if the graph is reflexive, symmetric and transitive, then it is an equivalence relation
     if (isReflexive() && isSymmetric() && isTransitive()) {
@@ -132,10 +190,17 @@ public class Graph<T extends Comparable<T>> {
     return false;
   }
 
+  /**
+   * Returns the equivalence class of a vertex.
+   *
+   * @param vertex The vertex to find the equivalence class of.
+   * @return The set of vertices that are in the equivalence class of the vertex.
+   */
   public Set<T> getEquivalenceClass(T vertex) {
-    // create a new tree set
+
     Set<T> equivalenceClass = new TreeSet<>();
 
+    // if the graph is not an equivalence relation, then return the vertex
     if (!isEquivalence()) {
       return equivalenceClass;
     }
@@ -161,39 +226,56 @@ public class Graph<T extends Comparable<T>> {
     return equivalenceClass;
   }
 
+  /**
+   * Goes through the graph in the order the first node is connected to them.
+   *
+   * @return A list of the vertices in the order they were visited.
+   */
   public List<T> iterativeBreadthFirstSearch() {
-    List<T> result = new ArrayList<>(); // List to store the visited vertices in order
-    Set<T> visited = new HashSet<>(); // Set to keep track of visited vertices
-    Queue<T> queue = new Queue<>(); // Queue for breadth-first search
+    // List to store the visited vertices in order
+    List<T> result = new ArrayList<>();
+    // Set to keep track of visited vertices
+    Set<T> visited = new HashSet<>();
 
-    // Start with the roots of the graph
+    // Queue for breadth-first search
+    Queue<T> queue = new Queue<>();
+
     Set<T> roots = getRoots();
+
+    // adds all roots to the queue and visited set
     for (T root : roots) {
       if (!visited.contains(root)) {
-        queue.enqueue(root); // Enqueue the root vertex
-        visited.add(root); // Mark the root vertex as visited
+        queue.enqueue(root);
+        visited.add(root);
       }
     }
 
+    // Explore the graph until all vertices are visited
     while (!queue.isEmpty()) {
-      T vertex = queue.dequeue(); // Dequeue a vertex from the queue
-      result.add(vertex); // Add the vertex to the result list
+      T vertex = queue.dequeue();
+      result.add(vertex);
 
       // Explore the neighbors of the current vertex
       for (Edge<T> edge : edges) {
         if (edge.getSource().equals(vertex)) {
           T destination = edge.getDestination();
           if (!visited.contains(destination)) {
-            queue.enqueue(destination); // Enqueue the neighbor if not visited
-            visited.add(destination); // Mark the neighbor as visited
+            queue.enqueue(destination);
+            visited.add(destination);
           }
         }
       }
     }
 
-    return result; // Return the list of visited vertices in order
+    // Return the result list in the order of breadth-first search
+    return result;
   }
 
+  /**
+   * Goes through the graph in the order each node is connected to them.
+   *
+   * @return A list of the vertices in the order they were visited.
+   */
   public List<T> iterativeDepthFirstSearch() {
     List<T> result = new ArrayList<>(); // List to store the visited vertices in order
     Set<T> visited = new HashSet<>(); // Set to keep track of visited vertices
@@ -203,10 +285,10 @@ public class Graph<T extends Comparable<T>> {
     Set<T> roots = getRoots();
     for (T root : roots) {
       if (!visited.contains(root)) {
-        stack.push(root); // Push the root vertex to the stack
+        stack.push(root);
 
         while (!stack.isEmpty()) {
-          T vertex = stack.pop(); // Pop a vertex from the stack
+          T vertex = stack.pop();
 
           if (!visited.contains(vertex)) {
             result.add(vertex); // Add the vertex to the result list
@@ -229,7 +311,7 @@ public class Graph<T extends Comparable<T>> {
             // Push the reversed neighbors to the stack
             for (T neighbor : reversedNeighbors) {
               if (!visited.contains(neighbor)) {
-                stack.push(neighbor); // Push the neighbor to the stack
+                stack.push(neighbor);
               }
             }
           }
@@ -237,9 +319,15 @@ public class Graph<T extends Comparable<T>> {
       }
     }
 
-    return result; // Return the list of visited vertices in order
+    return result;
   }
 
+  /**
+   * Goes through the graph in the order the first node is connected to them using a helper function
+   * to reduce complexity .
+   *
+   * @return A list of the vertices in the order they were visited.
+   */
   public List<T> recursiveBreadthFirstSearch() {
     List<T> result = new ArrayList<>(); // List to store the visited vertices in order
     Set<T> visited = new HashSet<>(); // Set to keep track of visited vertices
@@ -248,17 +336,28 @@ public class Graph<T extends Comparable<T>> {
     // Start with the roots of the graph
     Set<T> roots = getRoots();
     for (T root : roots) {
+
+      // If the root is not visited, then perform recursive breadth-first search using the helper function
+
       if (!visited.contains(root)) {
-        recursiveBFS(root, queue, visited, result); // Perform recursive breadth-first search
+        recursiveBFS(root, queue, visited, result); 
       }
     }
 
-    return result; // Return the list of visited vertices in order
+    return result; 
   }
 
+  /**
+   * Helper function for recursive breadth-first search.
+   *
+   * @param vertex The vertex to start the search from.
+   * @param queue The queue to use for the search.
+   * @param visited The set to keep track of visited vertices.
+   * @param result The list to store the visited vertices in order.
+   */
   private void recursiveBFS(T vertex, Queue<T> queue, Set<T> visited, List<T> result) {
     if (visited.contains(vertex)) {
-      return; // If the vertex is already visited, return
+      return; 
     }
 
     queue.enqueue(vertex); // Enqueue the vertex
@@ -279,6 +378,12 @@ public class Graph<T extends Comparable<T>> {
     }
   }
 
+  /**
+   * Goes through the graph in the order each node is connected to them using a helper function to
+   * reduce complexity .
+   *
+   * @return A list of the vertices in the order they were visited.
+   */
   public List<T> recursiveDepthFirstSearch() {
 
     List<T> result = new ArrayList<>(); // List to store the visited vertices in order
@@ -292,9 +397,16 @@ public class Graph<T extends Comparable<T>> {
       }
     }
 
-    return result; // Return the list of visited vertices in order
+    return result; 
   }
 
+  /**
+   * Helper function for recursive depth-first search.
+   *
+   * @param vertex The vertex to start the search from.
+   * @param visited The set to keep track of visited vertices.
+   * @param result The list to store the visited vertices in order.
+   */
   private void recursiveDFS(T vertex, Set<T> visited, List<T> result) {
     visited.add(vertex); // Mark the vertex as visited
     result.add(vertex); // Add the vertex to the result list
