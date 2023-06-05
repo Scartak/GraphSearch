@@ -1,9 +1,6 @@
 package nz.ac.auckland.se281.datastructures;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -28,9 +25,7 @@ public class Graph<T extends Comparable<T>> {
 
   public Set<T> getRoots() {
 
-    Set<T> roots = new TreeSet<>();
-    List<Integer> rootsList = new ArrayList<>();
-    Set<T> tempRoots = new TreeSet<>();
+    Set<T> roots;
 
     if (isEquivalence()) {
       roots = new TreeSet<>();
@@ -39,25 +34,13 @@ public class Graph<T extends Comparable<T>> {
         roots.add(min);
       }
     } else {
-      // roots = new TreeSet<>();
+      roots = new TreeSet<>();
 
-      tempRoots = new TreeSet<>(verticies); // Initialize roots with all vertices
+      roots = new TreeSet<>(verticies); // Initialize roots with all vertices
       for (Edge<T> edge : edges) {
-        tempRoots.remove(edge.getDestination()); // Remove destinations from roots
+        roots.remove(edge.getDestination()); // Remove destinations from roots
       }
-      for(T root : tempRoots) {
-        int temp =  Integer.parseInt(root.toString());
-        rootsList.add(temp);
-       }
-       
-       Collections.sort(rootsList);
-       for(int hold: rootsList) {
-        T inRoot = (T)(Object)(hold);
-        roots.add(inRoot);
-      }
-  
     }
-
     return roots;
   }
 
@@ -198,13 +181,11 @@ public class Graph<T extends Comparable<T>> {
 
       // Explore the neighbors of the current vertex
       for (Edge<T> edge : edges) {
-        Integer temp = Integer.parseInt(edge.getSource().toString());
-        if (temp.equals(vertex)) {
-          Integer destination = Integer.parseInt(edge.getDestination().toString());
+        if (edge.getSource().equals(vertex)) {
+          T destination = edge.getDestination();
           if (!visited.contains(destination)) {
-            T inDestination = (T) (Object) (destination);
-            queue.enqueue(inDestination); // Enqueue the neighbor if not visited
-            visited.add(inDestination); // Mark the neighbor as visited
+            queue.enqueue(destination); // Enqueue the neighbor if not visited
+            visited.add(destination); // Mark the neighbor as visited
           }
         }
       }
