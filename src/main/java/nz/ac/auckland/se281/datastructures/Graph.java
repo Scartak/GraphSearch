@@ -50,7 +50,7 @@ public class Graph<T extends Comparable<T>> {
     int reflexiveEdges = 0;
 
     for (Edge<T> edge : edges) {
-      if (edge.getSource().equals(edge.getDestination())) {
+      if (edge.getSource() == edge.getDestination()) {
         reflexiveEdges++;
       }
     }
@@ -152,7 +152,7 @@ public class Graph<T extends Comparable<T>> {
         if (e.getSource().equals(vertex)) {
           equivalenceClass.add(e.getDestination());
         }
-        if (e.getDestination().equals(vertex)) {
+        if (e.getDestination() == vertex) {
           equivalenceClass.add(e.getSource());
         }
       }
@@ -181,7 +181,7 @@ public class Graph<T extends Comparable<T>> {
 
       // Explore the neighbors of the current vertex
       for (Edge<T> edge : edges) {
-        if (edge.getSource().equals(vertex)) {
+        if (edge.getSource()== vertex) {
           T destination = edge.getDestination();
           if (!visited.contains(destination)) {
             queue.enqueue(destination); // Enqueue the neighbor if not visited
@@ -215,7 +215,7 @@ public class Graph<T extends Comparable<T>> {
             // Explore the neighbors of the current vertex
             List<T> neighbors = new ArrayList<>();
             for (Edge<T> edge : edges) {
-              if (edge.getSource().equals(vertex)) {
+              if (edge.getSource()== vertex) {
                 neighbors.add(edge.getDestination());
               }
             }
@@ -270,7 +270,7 @@ public class Graph<T extends Comparable<T>> {
 
       // Explore the neighbors of the current vertex
       for (Edge<T> edge : edges) {
-        if (edge.getSource().equals(current) && !visited.contains(edge.getDestination())) {
+        if (edge.getSource()== current && !visited.contains(edge.getDestination())) {
           T neighbor = edge.getDestination();
           queue.enqueue(neighbor); // Enqueue the neighbor if not visited
           visited.add(neighbor); // Mark the neighbor as visited
@@ -301,7 +301,7 @@ public class Graph<T extends Comparable<T>> {
 
     // Explore the neighbors of the current vertex
     for (Edge<T> edge : edges) {
-      if (edge.getSource().equals(vertex) && !visited.contains(edge.getDestination())) {
+      if (edge.getSource() == vertex && !visited.contains(edge.getDestination())) {
         recursiveDFS(edge.getDestination(), visited, result); // Recursively visit the neighbor
       }
     }
