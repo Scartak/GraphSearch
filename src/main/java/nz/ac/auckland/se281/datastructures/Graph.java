@@ -1,6 +1,7 @@
 package nz.ac.auckland.se281.datastructures;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -44,29 +45,18 @@ public class Graph<T extends Comparable<T>> {
       for (Edge<T> edge : edges) {
         tempRoots.remove(edge.getDestination()); // Remove destinations from roots
       }
+      for(T root : tempRoots) {
+        int temp =  Integer.parseInt(root.toString());
+        rootsList.add(temp);
+       }
+       
+       Collections.sort(rootsList);
+       for(int hold: rootsList) {
+        T inRoot = (T)(Object)hold;
+        roots.add(inRoot);
+      }
+  
     }
-
-    for(T root : tempRoots) {
-     int temp =  Integer.parseInt(root.toString());
-     rootsList.add(temp);
-    }
-
-    Collections.sort(rootsList);
-
-    //get minimum number from rootsList
-    // int min = rootsList.get(0);
-    // for(int i = 0; i < rootsList.size(); i++){
-    //   if(rootsList.get(i) < min){
-    //     sorting[i] = rootsList.get(i);
-    //   }    
-    // }
-    
-
-    for(int hold: rootsList) {
-      T inRoot = (T) Integer.toString(hold);
-      roots.add(inRoot);
-    }
-
 
     return roots;
   }
