@@ -38,11 +38,10 @@ public class LinkedList<T> implements List<T> {
     Node<T> newNode = new Node<T>(data);
 
     // If the list is empty, then the new node is the head node
+    // Otherwise, traverse to the end of the list and add the new node there
     if (head == null) {
       head = newNode;
-    }
-    // Otherwise, traverse to the end of the list and add the new node there
-    else {
+    } else {
       Node<T> current = head;
       while (current.getNext() != null) {
         current = current.getNext();
@@ -79,11 +78,10 @@ public class LinkedList<T> implements List<T> {
   public void insert(int pos, T data) {
 
     // If the position is 0, then we need to change the head
+    // If the position is not 0, then we need to traverse the list
     if (pos == 0) {
       prepend(data);
-    }
-    // If the position is not 0, then we need to traverse the list
-    else {
+    } else {
       Node<T> newNode = new Node<T>(data);
       Node<T> current = head;
       int index = 0;
@@ -108,11 +106,10 @@ public class LinkedList<T> implements List<T> {
   public void remove(int pos) {
 
     // If the position is 0, then we need to change the head
+    // If the position is not 0, then we need to traverse the list
     if (pos == 0) {
       head = head.getNext();
-    }
-    // If the position is not 0, then we need to traverse the list
-    else {
+    } else {
       Node<T> current = head;
       int index = 0;
 

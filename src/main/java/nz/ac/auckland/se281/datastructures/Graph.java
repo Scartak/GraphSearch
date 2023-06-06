@@ -38,17 +38,15 @@ public class Graph<T extends Comparable<T>> {
     Set<T> roots;
 
     // If the graph is an equivalence relation, then the roots are the minimum elements of each
+    // If the graph is not an equivalence relation, then the roots are the vertices with no incoming
+    // edges
     if (isEquivalence()) {
       roots = new TreeSet<>();
       for (T vertex : verticies) {
         T min = getEquivalenceClass(vertex).stream().findFirst().get();
         roots.add(min);
       }
-    }
-
-    // If the graph is not an equivalence relation, then the roots are the vertices with no incoming
-    // edges
-    else {
+    } else {
 
       roots = new TreeSet<>(verticies);
       for (Edge<T> edge : edges) {
