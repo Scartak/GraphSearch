@@ -16,6 +16,12 @@ import java.util.TreeSet;
  */
 public class Graph<T extends Comparable<T>> {
 
+  // comparator for comparing the values of two verticies
+  Comparator<T> rootComparator =
+      (string1, string2) -> {
+        return Integer.parseInt(string1.toString()) - Integer.parseInt(string2.toString());
+      };
+
   private Set<T> verticies;
   private Set<Edge<T>> edges;
 
@@ -23,12 +29,6 @@ public class Graph<T extends Comparable<T>> {
     this.verticies = verticies;
     this.edges = edges;
   }
-
-  // comparator for comparing the values of two verticies
-  Comparator<T> rootComparator =
-      (string1, string2) -> {
-        return Integer.parseInt(string1.toString()) - Integer.parseInt(string2.toString());
-      };
 
   /**
    * Returns the set of roots of this graph.
