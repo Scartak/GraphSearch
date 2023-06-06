@@ -1,7 +1,7 @@
 package nz.ac.auckland.se281.datastructures;
 
 /**
- * List Interface to be implemented by singly and Doubly Linked Lists
+ * List Interface to be implemented by singly and Doubly Linked Lists.
  *
  * @author Partha Roop
  */
