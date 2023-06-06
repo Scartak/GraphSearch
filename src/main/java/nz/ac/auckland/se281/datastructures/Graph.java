@@ -24,6 +24,7 @@ public class Graph<T extends Comparable<T>> {
     this.edges = edges;
   }
 
+  // comparator for comparing the values of two verticies
   Comparator<T> rootComparator =
       (string1, string2) -> {
         return Integer.parseInt(string1.toString()) - Integer.parseInt(string2.toString());
