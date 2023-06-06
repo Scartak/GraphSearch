@@ -7,10 +7,6 @@ package nz.ac.auckland.se281.datastructures;
  */
 public class Queue<T> {
 
-  private int size; // size of the queue
-  private Node<T> front; // front of the queue
-  private Node<T> rear; // rear of the queue
-
   /**
    * A private inner class representing a node in the queue.
    *
@@ -30,6 +26,10 @@ public class Queue<T> {
       this.next = null;
     }
   }
+
+  private int size; // size of the queue
+  private Node<T> front; // front of the queue
+  private Node<T> rear; // rear of the queue
 
   /** Constructs an empty queue. */
   public Queue() {

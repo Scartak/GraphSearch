@@ -18,7 +18,7 @@ public class LinkedList<T> implements List<T> {
   /**
    * This method adds a node with specified data as the start node of the list
    *
-   * @param data: an object of type T
+   * @param data an object of type T
    * @return void
    */
   public void prepend(T data) {
@@ -30,7 +30,7 @@ public class LinkedList<T> implements List<T> {
   /**
    * This method adds a node with specified data at the end of the list
    *
-   * @param data: an object of type T
+   * @param data an object of type T
    * @return void
    */
   public void append(T data) {
@@ -54,7 +54,7 @@ public class LinkedList<T> implements List<T> {
   /**
    * This method fetches the value of a node at a given position
    *
-   * @param pos: an integer, which is the position
+   * @param pos an integer, which is the position
    * @return the value at the position pos
    */
   public T fetch(int pos) {
@@ -72,10 +72,9 @@ public class LinkedList<T> implements List<T> {
   /**
    * This method inserts a node with specified data at a given position
    *
-   * @param pos: an integer, which is the position
-   * @param data: an object of type T
+   * @param pos an integer, which is the position
+   * @param data an object of type T
    * @return void
-   * @throws InvalidPositionException if the provided position is invalid
    */
   public void insert(int pos, T data) {
 
@@ -103,7 +102,7 @@ public class LinkedList<T> implements List<T> {
   /**
    * This method removes a node at a given position
    *
-   * @param pos: an integer, which is the position
+   * @param pos an integer, which is the position
    * @return void
    */
   public void remove(int pos) {

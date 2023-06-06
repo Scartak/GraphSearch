@@ -340,7 +340,7 @@ public class Graph<T extends Comparable<T>> {
       // function
 
       if (!visited.contains(root)) {
-        recursiveBreadthHelper(root, queue, visited, result);
+        searchForBreadth(root, queue, visited, result);
       }
     }
 
@@ -355,7 +355,7 @@ public class Graph<T extends Comparable<T>> {
    * @param visited The set to keep track of visited vertices.
    * @param result The list to store the visited vertices in order.
    */
-  private void recursiveBreadthHelper(T vertex, Queue<T> queue, Set<T> visited, List<T> result) {
+  private void searchForBreadth(T vertex, Queue<T> queue, Set<T> visited, List<T> result) {
     if (visited.contains(vertex)) {
       return;
     }
@@ -393,7 +393,7 @@ public class Graph<T extends Comparable<T>> {
     Set<T> roots = getRoots();
     for (T root : roots) {
       if (!visited.contains(root)) {
-        recursiveDepthHelper(root, visited, result); // Perform recursive depth-first search
+        searchForDepth(root, visited, result); // Perform recursive depth-first search
       }
     }
 
@@ -407,15 +407,14 @@ public class Graph<T extends Comparable<T>> {
    * @param visited The set to keep track of visited vertices.
    * @param result The list to store the visited vertices in order.
    */
-  private void recursiveDepthHelper(T vertex, Set<T> visited, List<T> result) {
+  private void searchForDepth(T vertex, Set<T> visited, List<T> result) {
     visited.add(vertex); // Mark the vertex as visited
     result.add(vertex); // Add the vertex to the result list
 
     // Explore the neighbors of the current vertex
     for (Edge<T> edge : edges) {
       if (edge.getSource().equals(vertex) && !visited.contains(edge.getDestination())) {
-        recursiveDepthHelper(
-            edge.getDestination(), visited, result); // Recursively visit the neighbor
+        searchForDepth(edge.getDestination(), visited, result); // Recursively visit the neighbor
       }
     }
   }
