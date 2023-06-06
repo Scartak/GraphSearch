@@ -49,7 +49,6 @@ public class Graph<T extends Comparable<T>> {
     // If the graph is not an equivalence relation, then the roots are the vertices with no incoming
     // edges
     else {
-      roots = new TreeSet<>();
 
       roots = new TreeSet<>(verticies);
       for (Edge<T> edge : edges) {
@@ -337,14 +336,15 @@ public class Graph<T extends Comparable<T>> {
     Set<T> roots = getRoots();
     for (T root : roots) {
 
-      // If the root is not visited, then perform recursive breadth-first search using the helper function
+      // If the root is not visited, then perform recursive breadth-first search using the helper
+      // function
 
       if (!visited.contains(root)) {
-        recursiveBFS(root, queue, visited, result); 
+        recursiveBreadthHelper(root, queue, visited, result);
       }
     }
 
-    return result; 
+    return result;
   }
 
   /**
@@ -355,9 +355,9 @@ public class Graph<T extends Comparable<T>> {
    * @param visited The set to keep track of visited vertices.
    * @param result The list to store the visited vertices in order.
    */
-  private void recursiveBFS(T vertex, Queue<T> queue, Set<T> visited, List<T> result) {
+  private void recursiveBreadthHelper(T vertex, Queue<T> queue, Set<T> visited, List<T> result) {
     if (visited.contains(vertex)) {
-      return; 
+      return;
     }
 
     queue.enqueue(vertex); // Enqueue the vertex
@@ -393,11 +393,11 @@ public class Graph<T extends Comparable<T>> {
     Set<T> roots = getRoots();
     for (T root : roots) {
       if (!visited.contains(root)) {
-        recursiveDFS(root, visited, result); // Perform recursive depth-first search
+        recursiveDepthHelper(root, visited, result); // Perform recursive depth-first search
       }
     }
 
-    return result; 
+    return result;
   }
 
   /**
@@ -407,14 +407,15 @@ public class Graph<T extends Comparable<T>> {
    * @param visited The set to keep track of visited vertices.
    * @param result The list to store the visited vertices in order.
    */
-  private void recursiveDFS(T vertex, Set<T> visited, List<T> result) {
+  private void recursiveDepthHelper(T vertex, Set<T> visited, List<T> result) {
     visited.add(vertex); // Mark the vertex as visited
     result.add(vertex); // Add the vertex to the result list
 
     // Explore the neighbors of the current vertex
     for (Edge<T> edge : edges) {
       if (edge.getSource().equals(vertex) && !visited.contains(edge.getDestination())) {
-        recursiveDFS(edge.getDestination(), visited, result); // Recursively visit the neighbor
+        recursiveDepthHelper(
+            edge.getDestination(), visited, result); // Recursively visit the neighbor
       }
     }
   }

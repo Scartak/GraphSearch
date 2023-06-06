@@ -28,16 +28,21 @@ public class LinkedList<T> implements List<T> {
   }
 
   /**
-   * This method adds a node with specified data as the end node of the list
+   * This method adds a node with specified data at the end of the list
    *
    * @param data: an object of type T, which is the value of the Node
    * @return void
    */
   public void append(T data) {
+
     Node<T> newNode = new Node<T>(data);
+
+    // If the list is empty, then the new node is the head node
     if (head == null) {
       head = newNode;
-    } else {
+    }
+    // Otherwise, traverse to the end of the list and add the new node there
+    else {
       Node<T> current = head;
       while (current.getNext() != null) {
         current = current.getNext();
@@ -75,12 +80,17 @@ public class LinkedList<T> implements List<T> {
    */
   public void insert(int pos, T data) {
 
+    // If the position is 0, then we need to change the head
     if (pos == 0) {
       prepend(data);
-    } else {
+    }
+    // If the position is not 0, then we need to traverse the list
+    else {
       Node<T> newNode = new Node<T>(data);
       Node<T> current = head;
       int index = 0;
+
+      // Traverse the list until we reach the node before the one we want to insert
       while (current != null && index < pos - 1) {
         current = current.getNext();
         index++;
@@ -100,16 +110,22 @@ public class LinkedList<T> implements List<T> {
    */
   public void remove(int pos) {
 
+    // If the position is 0, then we need to change the head
     if (pos == 0) {
       head = head.getNext();
-    } else {
+    }
+    // If the position is not 0, then we need to traverse the list
+    else {
       Node<T> current = head;
       int index = 0;
+
+      // Traverse the list until we reach the node before the one we want to remove
       while (current != null && index < pos - 1) {
         current = current.getNext();
         index++;
       }
 
+      // Remove the node
       Node<T> nodeToRemove = current.getNext();
       current.setNext(nodeToRemove.getNext());
       nodeToRemove.setNext(null);
