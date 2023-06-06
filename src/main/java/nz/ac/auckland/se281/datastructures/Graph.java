@@ -1,6 +1,7 @@
 package nz.ac.auckland.se281.datastructures;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -22,6 +23,11 @@ public class Graph<T extends Comparable<T>> {
     this.verticies = verticies;
     this.edges = edges;
   }
+
+  Comparator<T> rootComparator =
+      (string1, string2) -> {
+        return Integer.parseInt(string1.toString()) - Integer.parseInt(string2.toString());
+      };
 
   /**
    * Returns the set of roots of this graph.
@@ -48,7 +54,8 @@ public class Graph<T extends Comparable<T>> {
       }
     } else {
 
-      roots = new TreeSet<>(verticies);
+      roots = new TreeSet<>(rootComparator);
+      roots.addAll(verticies);
       for (Edge<T> edge : edges) {
         roots.remove(edge.getDestination());
       }
