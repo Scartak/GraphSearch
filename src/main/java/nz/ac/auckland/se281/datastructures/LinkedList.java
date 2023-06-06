@@ -55,6 +55,10 @@ public class LinkedList<T> implements List<T> {
    * @throws IndexOutOfBoundsException if the position is out of range
    */
   public T fetch(int pos) {
+
+    // Traverse the list until we reach the node at the specified position
+    // If we reach the end of the list before reaching the specified position, then the position is
+    // invalid
     Node<T> current = head;
     int index = 0;
     while (current != null && index < pos) {
