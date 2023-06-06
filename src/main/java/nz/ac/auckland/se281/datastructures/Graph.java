@@ -253,20 +253,19 @@ public class Graph<T extends Comparable<T>> {
         queue.enqueue(root);
         visited.add(root);
       }
-    }
+      // Explore the graph until all vertices are visited
+      while (!queue.isEmpty()) {
+        T vertex = queue.dequeue();
+        result.add(vertex);
 
-    // Explore the graph until all vertices are visited
-    while (!queue.isEmpty()) {
-      T vertex = queue.dequeue();
-      result.add(vertex);
-
-      // Explore the neighbors of the current vertex
-      for (Edge<T> edge : edges) {
-        if (edge.getSource().equals(vertex)) {
-          T destination = edge.getDestination();
-          if (!visited.contains(destination)) {
-            queue.enqueue(destination);
-            visited.add(destination);
+        // Explore the neighbors of the current vertex
+        for (Edge<T> edge : edges) {
+          if (edge.getSource().equals(vertex)) {
+            T destination = edge.getDestination();
+            if (!visited.contains(destination)) {
+              queue.enqueue(destination);
+              visited.add(destination);
+            }
           }
         }
       }
