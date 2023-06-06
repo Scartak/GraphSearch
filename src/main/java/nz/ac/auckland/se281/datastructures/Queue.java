@@ -85,12 +85,18 @@ public class Queue<T> {
    * @throws IllegalStateException if the queue is empty
    */
   public T dequeue() {
+    // if queue is empty, throw an exception
     if (isEmpty()) {
       throw new IllegalStateException("Queue is empty");
     }
+
+    // else, remove the front node and decrease the size of the queue
+    // store the data of the front node
     T data = front.data;
     front = front.next;
     size--;
+
+    // if queue is empty, set rear to null
     if (isEmpty()) {
       rear = null;
     }

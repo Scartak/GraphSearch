@@ -18,7 +18,7 @@ public class LinkedList<T> implements List<T> {
   /**
    * This method adds a node with specified data as the start node of the list
    *
-   * @param data: an object of type T, which is the value of the Node
+   * @param data: an object of type T
    * @return void
    */
   public void prepend(T data) {
@@ -30,7 +30,7 @@ public class LinkedList<T> implements List<T> {
   /**
    * This method adds a node with specified data at the end of the list
    *
-   * @param data: an object of type T, which is the value of the Node
+   * @param data: an object of type T
    * @return void
    */
   public void append(T data) {
@@ -56,7 +56,6 @@ public class LinkedList<T> implements List<T> {
    *
    * @param pos: an integer, which is the position
    * @return the value at the position pos
-   * @throws InvalidPositionException if the provided position is invalid
    */
   public T fetch(int pos) {
 
@@ -74,7 +73,7 @@ public class LinkedList<T> implements List<T> {
    * This method inserts a node with specified data at a given position
    *
    * @param pos: an integer, which is the position
-   * @param data: an object of type T, which is the value of the Node
+   * @param data: an object of type T
    * @return void
    * @throws InvalidPositionException if the provided position is invalid
    */
@@ -106,7 +105,6 @@ public class LinkedList<T> implements List<T> {
    *
    * @param pos: an integer, which is the position
    * @return void
-   * @throws InvalidPositionException if the provided position is invalid
    */
   public void remove(int pos) {
 
@@ -133,7 +131,7 @@ public class LinkedList<T> implements List<T> {
   }
 
   /**
-   * This method returns the size of the list
+   * This method returns the size of the list.
    *
    * @return the size of the list
    */
