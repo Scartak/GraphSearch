@@ -17,7 +17,7 @@ import java.util.TreeSet;
 public class Graph<T extends Comparable<T>> {
 
   // comparator for comparing the values of two verticies
-  Comparator<T> rootComparator =
+  private Comparator<T> rootComparator =
       (string1, string2) -> {
         return Integer.parseInt(string1.toString()) - Integer.parseInt(string2.toString());
       };
